@@ -1,0 +1,69 @@
+Project Report: AI-Powered Fitness App
+
+Prepared on: 2026-10-13
+Repository: PraaneshRam/AI-Powered-Fitness-App
+Project Type: Flutter mobile application
+
+1. Overview
+This project is a Flutter-based fitness application designed to help users monitor nutrition, hydration, activity, and progress over time. The app combines Firebase-based authentication and data storage with AI-assisted features for food recognition, body analysis, and health insights.
+
+2. Project scope and purpose
+The application aims to support a healthier lifestyle by letting users:
+- log food and track calorie/protein intake;
+- view daily nutrition totals and history;
+- monitor water intake and activity trends;
+- review personal workout progress and insights;
+- analyze body or food images using onboard AI services;
+- maintain a profile and user-specific dashboard.
+
+3. Technical stack
+- Frontend: Flutter + Dart
+- State management: Provider pattern
+- Backend / data layer: Firebase Authentication, Cloud Firestore, Firebase Storage
+- APIs and integrations: Gemini API (image-based food analysis), Cloudinary (image upload), HTTP networking
+- Utilities: intl, shared_preferences, fl_chart, google_fonts, image_picker, sensors_plus, permission_handler
+
+4. Key project modules
+4.1 Application entry and navigation
+The main app is initialized in lib/main.dart. It configures Firebase, sets up providers, and defines the app's routing and authentication flow. Users are routed to login or the main app interface depending on authentication state.
+
+4.2 Core fitness tracking features
+The application includes screens for food logging, activity monitoring, insights, user profile management, and analytics dashboards. These features help users capture daily patterns and understand progress over time.
+
+4.3 Food and nutrition service
+The file lib/services/food_service.dart is a core service layer for food-related logic. It handles:
+- Firebase user context and auth state;
+- uploading food images to Cloudinary;
+- sending image data to the Gemini API for nutritional recognition;
+- storing a food entry in Firestore under the current user;
+- querying today's food entries and daily totals;
+- deleting food entries when needed.
+
+Key functions in this service include:
+- analyzeImage(File imageFile): sends an image to Gemini and extracts structured nutrition JSON.
+- addFoodEntry({required String name, required int calories, required double protein, File? image}): stores a user food record.
+- getTodaysFoodEntries(): returns a Firestore stream for current-day nutrition entries.
+- getDailyTotals(): returns aggregated daily calorie and protein totals.
+- deleteFoodEntry(String entryId): removes an entry from the user's collection.
+
+4.4 Body analysis module
+The lib/body_analyze folder contains the photo upload and analysis workflow. This is designed to let users capture or select images and review them through backend analysis, supporting fitness and body assessment use cases.
+
+5. Observations from the current codebase
+- The project is structured as a multi-screen Flutter app with separate directories for services, providers, models, screens, and body analysis modules.
+- Firebase is central to the app's architecture, providing both user identity and persistent data storage.
+- The nutrition feature is AI-assisted through Gemini, which makes the app more intelligent than a traditional tracker.
+- The service layer includes placeholders such as API keys and Cloudinary configuration values (for example REPLACE_WITH_YOUR_GEMINI_API_KEY and REPLACE_WITH_YOUR_CLOUD_NAME). These need to be replaced with real credentials before deployment.
+
+6. Setup and deployment notes
+To run the project successfully, the app requires:
+- Flutter SDK installed and configured;
+- Firebase project setup and google-services files for Android/iOS/web;
+- a valid Gemini API key;
+- a configured Cloudinary upload preset and cloud name;
+- dependency installation with flutter pub get.
+
+7. Conclusion
+This project represents a comprehensive fitness tracking application that merges nutrition, AI analysis, motivation, and progress monitoring into one mobile experience. Its architecture is modular and extensible, with food and body analysis services providing the main innovation layer. The main improvement required before production use is securing and configuring the external service credentials and validating end-to-end Firebase and AI integration.
+
+Generated from project review of the repository and key source files, including lib/services/food_service.dart.
